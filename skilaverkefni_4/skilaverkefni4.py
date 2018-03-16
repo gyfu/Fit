@@ -1,4 +1,5 @@
 #Höfundur: Huginn Þór Jóhannsson
+import json
 #Liður 1: Sléttar tölur frá 1 - 1000
 def slettTolurListi():
 	listi = []
@@ -78,28 +79,73 @@ def fjordaHver(listi):
 		
 #lidur2()
 #Liður 3: Tuple
-def makeTuple():
-	temp_list = []
+def lesaAlt(skra):
+	with open(skra, "r") as f:
+		file = f.read()
+		return file
+def writeTuple(efni, skra, mode):
+	with open(skra, mode) as f:
+		f.write("(")
+		for x in efni:
+			f.write(str(x))
+			f.write(",")
+		f.write(")")
+		f.write("\n")
+def notandaTuple():
+	tempList = []
 	while True:
-		texti = input("Skrifaðu texta (skrifaðu 'break' til að hætta):\n")
-		if texti == "hætta":
+		text = input("Hvaða texta viltu skrifa(skrifaður break! til að hætta):\n")
+		if text == "break!":
 			break
 		else: 
-			temp_list.append(texti)
-	temp_tuple = tuple(temp_list)
-	return temp_tuple
-def baetaSkra(nafnskra, efni):
-	with open(nafnskra, "a") as f:
-		f.write(str(efni))
+			tempList.append(text)
+	userTuple = tuple(tempList)
+	return userTuple
+def findSum(efni):
+	summa = 0
+	for x in efni:
+		summa += x
+	return summa
+	
 def lidur3():
-	efni1 = makeTuple()
-	efni2 = makeTuple()
-	efni3 = makeTuple()
-	baetaSkra("tuple.txt", efni1)
-	baetaSkra("tuple.txt", efni2)
-	baetaSkra("tuple.txt", efni3)
-lidur3()
-
+	fyrsta = (123,"ghgh",321,"hghg")
+	annad = (1,2,3,4,5,6,7,8,9)
+	thridja = ("a","b","c","d","e","f","g","h")
+	writeTuple(fyrsta, "tuple.txt", "w")
+	writeTuple(annad, "tuple.txt", "a")
+	writeTuple(thridja, "tuple.txt", "a")
+	print(lesaAlt("tuple.txt"))
+	userTuple = notandaTuple()
+	writeTuple(userTuple, "tuple.txt", "a")
+	print("Summa annars tuplesins er {}".format(findSum(annad)))	
+#lidur3()
+#Liður 4: Dict
+def makeDict(strengList, numList):
+	tempDict = {}
+	for i in range(len(numList)):
+		tempDict[numList[i]] = strengList[i]
+	return tempDict
+def writeDict(efni, skra, mode):
+	with open(skra, mode) as f:
+		f.write(str(efni))
+		f.write("\n")
+def eittSett(skra):
+	#listi = []
+	with open(skra, "r") as f:
+		listi = f.read().split(",")
+		for x in listi:
+			print(x, "\n")
+def lidur4():
+	tempDict = makeDict(["Konni","Snorri","Kalli","Palli"], [1,2,3,4])
+	writeDict(tempDict, "dict.txt","w")
+	print(lesaAlt("dict.txt"))
+	dictTwo = makeDict(["Epli","Granít","Snorra saga","Lúðvík","Grænmeti", "Bílar",],[6,5,4,3,2,1])
+	dictThree = makeDict(["Jón","Hulda","Hít","Gimli"],["Maður","Álfur","Tröll","Dvergur"])
+	writeDict(dictTwo,"dict.txt","a")
+	writeDict(dictThree,"dict.txt","a")
+	eittSett("dict.txt")
+	
+lidur4()
 
 
 
